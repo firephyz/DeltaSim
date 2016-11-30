@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,6 +22,8 @@ public class Display extends JFrame {
 	private MyPanel canvas;
 	
 	private BufferedImage buffer;
+	private ArrayList<ElementToPaint> things_to_draw;
+	private ArrayList<ElementToPaint> things_waiting_to_add;
 	
 	public static int DISPLAY_WIDTH = 500;
 	public static int DISPLAY_HEIGHT = 500;
@@ -36,6 +39,8 @@ public class Display extends JFrame {
 		myThis = this;
 		
 		buffer = new BufferedImage(DISPLAY_WIDTH, DISPLAY_HEIGHT, BufferedImage.TYPE_INT_RGB);
+		things_to_draw = new ArrayList<>();
+		things_waiting_to_add = new ArrayList<>();
 		
 		this.setTitle("DeltaSim");
 		this.setUndecorated(true);
@@ -142,8 +147,21 @@ public class Display extends JFrame {
 	public void updateBuffer(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
-		g.setColor(Color.GREEN);
-		g.fillRect(225, 225, 50, 50);
+		
+		for(ElementToPaint e : things_to_draw) {
+			e.paint(g);
+		}
+		
+		if(!things_waiting_to_add.isEmpty()) {
+			for(ElementToPaint e : things_waiting_to_add) {
+				things_to_draw.add(e);
+			}
+			things_waiting_to_add.clear();
+		}
+	}
+	
+	public void addElementToPaint(ElementToPaint e) {
+		things_waiting_to_add.add(e);
 	}
 	
 	class MyPanel extends JPanel {
