@@ -6,6 +6,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,8 +20,11 @@ public class Display extends JFrame {
 	private JFrame myThis;
 	private MyPanel canvas;
 	
+	private BufferedImage buffer;
+	
 	public static int DISPLAY_WIDTH = 500;
 	public static int DISPLAY_HEIGHT = 500;
+	public static int FRAMERATE = 60;
 	
 	private int mouse_click_x;
 	private int mouse_click_y;
@@ -28,10 +35,12 @@ public class Display extends JFrame {
 		mouse_click_y = -1;
 		myThis = this;
 		
+		buffer = new BufferedImage(DISPLAY_WIDTH, DISPLAY_HEIGHT, BufferedImage.TYPE_INT_RGB);
+		
 		this.setTitle("DeltaSim");
 		this.setUndecorated(true);
 		this.setSize(DISPLAY_WIDTH + 2, DISPLAY_HEIGHT + 2);
-		this.getContentPane().setBackground(Color.BLACK);
+		this.getContentPane().setBackground(Color.WHITE);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		
@@ -39,9 +48,26 @@ public class Display extends JFrame {
 		canvas = new MyPanel();
 		canvas.setSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);
 		canvas.setLocation(1, 1);
-		canvas.setBackground(Color.WHITE);
 		canvas.setVisible(true);
 		this.add(canvas);
+		
+		// Start the framerate thread
+		Timer tmr = new Timer();
+		tmr.scheduleAtFixedRate(new TimerTask() {
+
+			@Override
+			public void run() {
+				
+				if(canvas.getLocation().getX() == 0) {
+					canvas.setLocation(1, 1);
+				}
+				
+				updateBuffer(buffer.getGraphics());
+				
+				canvas.repaint();
+			}
+			
+		}, 0, 1000 / FRAMERATE);
 		
 		// Listens for the enter key to quit the program
 		this.addKeyListener(new KeyListener() {
@@ -112,12 +138,19 @@ public class Display extends JFrame {
 			
 		});
 	}
+
+	public void updateBuffer(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+		g.setColor(Color.GREEN);
+		g.fillRect(225, 225, 50, 50);
+	}
 	
 	class MyPanel extends JPanel {
 		
-//		@Override
-//		public void paintComponent(Graphics g) {
-//			
-//		}
+		@Override
+		public void paintComponent(Graphics g) {
+			g.drawImage(buffer, 0, 0, null);
+		}
 	}
 }
