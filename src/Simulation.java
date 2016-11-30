@@ -7,7 +7,6 @@ public class Simulation {
 	private Display disp;
 	
 	private ArrayList<SimCell> cells;
-	private ArrayList<SimCell> cells_to_add;
 	
 	public static int CELL_RES_X = 100;
 	public static int CELL_RES_Y = 100;
@@ -16,7 +15,6 @@ public class Simulation {
 		
 		disp = new Display();
 		cells = new ArrayList<>();
-		cells_to_add = new ArrayList<>();
 	}
 	
 	public void start() {
@@ -40,18 +38,11 @@ public class Simulation {
 		for(SimCell c : cells) {
 			c.update();
 		}
-		
-		if(!cells_to_add.isEmpty()) {
-			for(SimCell c : cells_to_add) {
-				cells.add(c);
-			}
-			cells_to_add.clear();
-		}
 	}
 	
 	public void addSimCell(SimCell cell) {
 		// Add to the simulation list
-		cells_to_add.add(cell);
+		cells.add(cell);
 		
 		// Add to the draw list
 		disp.addElementToPaint(cell);
