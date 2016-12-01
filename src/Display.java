@@ -80,7 +80,7 @@ public class Display extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					System.exit(0);
 				}
 			}
@@ -145,10 +145,10 @@ public class Display extends JFrame {
 	}
 
 	public void updateBuffer(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 		
 		synchronized(things_to_draw) {
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 			for(ElementToPaint e : things_to_draw) {
 				e.paint(g);
 			}

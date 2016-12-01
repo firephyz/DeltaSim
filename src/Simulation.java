@@ -10,9 +10,14 @@ public class Simulation {
 	
 	public static int CELL_RES_X = 100;
 	public static int CELL_RES_Y = 100;
+	
+	public static double DELTA_T = 0.01;
+	public static double DELTA_X = 0.1;
+	public static double DELTA_Y = 0.1;
 
 	public Simulation() {
 		
+		SimCell.sim = this;
 		disp = new Display();
 		cells = new ArrayList<>();
 	}
@@ -46,5 +51,14 @@ public class Simulation {
 		
 		// Add to the draw list
 		disp.addElementToPaint(cell);
+	}
+	
+	public SimCell getCell(int x, int y) {
+		
+		if(x < 0 || y < 0 || x >= Simulation.CELL_RES_X || y >= Simulation.CELL_RES_Y) {
+			return null;
+		}
+		
+		return cells.get(Simulation.CELL_RES_X * y + x);
 	}
 }

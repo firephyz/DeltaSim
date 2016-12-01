@@ -22,7 +22,25 @@ public class TempCell extends SimCell {
 
 	@Override
 	public void processInteraction() {
-		next_temp = temp - 1;
+		
+		TempCell left_cell = (TempCell)sim.getCell(x - 1, y);
+		TempCell right_cell = (TempCell)sim.getCell(x + 1, y);
+		TempCell upper_cell = (TempCell)sim.getCell(x, y - 1);
+		TempCell lower_cell = (TempCell)sim.getCell(x, y + 1);
+		
+		double left_cell_temp = left_cell == null ? 0 : left_cell.getTemp();
+		double right_cell_temp = right_cell == null ? 0 : right_cell.getTemp();
+		double upper_cell_temp = upper_cell == null ? 0 : upper_cell.getTemp();
+		double lower_cell_temp = lower_cell == null ? 0 : lower_cell.getTemp();
+		
+		double double_diff_x = (left_cell_temp + right_cell_temp -
+								2 * temp) / (Simulation.DELTA_X * Simulation.DELTA_X);
+		double double_diff_y = (upper_cell_temp + lower_cell_temp -
+								2 * temp) / (Simulation.DELTA_Y * Simulation.DELTA_Y);
+		
+		double laplace = double_diff_x + double_diff_y;
+
+		next_temp = 1.0 * laplace * Simulation.DELTA_T + temp;
 		
 		if(next_temp < 0) next_temp = 0;
 	}
@@ -34,7 +52,12 @@ public class TempCell extends SimCell {
 
 	@Override
 	public void paint(Graphics g) {
-		g.setColor(new Color(255, 255 - (int)(255 * (temp / 100)), 0));
+		
+		int color = 255 - (int)(255 * (temp / 100));
+		//System.out.println(temp);
+		//System.out.println(color);
+		
+		g.setColor(new Color(255, color, 0));
 		
 		int x_draw = Display.DISPLAY_WIDTH * x / Simulation.CELL_RES_X;
 		int y_draw = Display.DISPLAY_HEIGHT * y / Simulation.CELL_RES_Y;
@@ -43,4 +66,8 @@ public class TempCell extends SimCell {
 		
 		g.fillRect(x_draw, y_draw, x_width, y_width);
 	}
+	
+	public double getTemp() {return this.temp;}
+
+	
 }

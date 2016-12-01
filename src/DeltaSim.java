@@ -6,7 +6,13 @@ public class DeltaSim {
 		
 		for(int y = 0; y < Simulation.CELL_RES_Y; ++y) {
 			for(int x = 0; x < Simulation.CELL_RES_X; ++x) {
-				sim.addSimCell(new TempCell(x, y, y));
+				double temp = 0.0;
+				
+				if(x == Simulation.CELL_RES_X / 2 && y == Simulation.CELL_RES_Y / 2) {
+					temp = 100;
+				}
+				
+				sim.addSimCell(new TempCell(x, y, temp));
 			}
 		}
 		
