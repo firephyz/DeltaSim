@@ -26,6 +26,8 @@ public class Display extends JFrame {
 	private BufferedImage buffer;
 	private ArrayList<ElementToPaint> things_to_draw;
 	
+	private Simulation sim;
+	
 	public static int DISPLAY_WIDTH = 500;
 	public static int DISPLAY_HEIGHT = 500;
 	public static int FRAMERATE = 60;
@@ -33,11 +35,12 @@ public class Display extends JFrame {
 	private int mouse_click_x;
 	private int mouse_click_y;
 	
-	public Display() {
+	public Display(Simulation sim) {
 		
 		mouse_click_x = -1;
 		mouse_click_y = -1;
 		myThis = this;
+		this.sim = sim;
 		
 		buffer = new BufferedImage(DISPLAY_WIDTH, DISPLAY_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		things_to_draw = new ArrayList<>();
@@ -96,7 +99,11 @@ public class Display extends JFrame {
 		this.addMouseListener(new MouseListener() {
 
 			@Override
-			public void mouseClicked(MouseEvent m) {}
+			public void mouseClicked(MouseEvent m) {
+				double temp = ((TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
+						 m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT)).getTemp();
+				System.out.println(temp);
+			}
 
 			@Override
 			public void mouseEntered(MouseEvent m) {}

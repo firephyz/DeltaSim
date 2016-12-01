@@ -54,6 +54,7 @@ public class TempCell extends SimCell {
 	public void paint(Graphics g) {
 		
 		int color = 255 - (int)(255 * (temp / 100));
+		if(color < 0) color = 0;
 		//System.out.println(temp);
 		//System.out.println(color);
 		

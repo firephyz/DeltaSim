@@ -8,17 +8,17 @@ public class Simulation {
 	
 	private ArrayList<SimCell> cells;
 	
-	public static int CELL_RES_X = 100;
-	public static int CELL_RES_Y = 100;
+	public static int CELL_RES_X = 250;
+	public static int CELL_RES_Y = 250;
 	
-	public static double DELTA_T = 0.01;
+	public static double DELTA_T = 0.001;
 	public static double DELTA_X = 0.1;
 	public static double DELTA_Y = 0.1;
 
 	public Simulation() {
 		
 		SimCell.sim = this;
-		disp = new Display();
+		disp = new Display(this);
 		cells = new ArrayList<>();
 	}
 	
@@ -31,7 +31,7 @@ public class Simulation {
 			public void run() {
 				simLoop();
 			}
-		}, 0, 100);
+		}, 0, 50);
 	}
 	
 	public void simLoop() {
