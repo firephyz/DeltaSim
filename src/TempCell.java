@@ -28,6 +28,11 @@ public class TempCell extends SimCell {
 		TempCell upper_cell = (TempCell)sim.getCell(x, y - 1);
 		TempCell lower_cell = (TempCell)sim.getCell(x, y + 1);
 		
+		if(left_cell == null) left_cell = (TempCell)sim.getCell(Simulation.CELL_RES_X - 1, y);
+		if(right_cell == null) right_cell = (TempCell)sim.getCell(0, y);
+		if(upper_cell == null) upper_cell = (TempCell)sim.getCell(x, Simulation.CELL_RES_Y - 1);
+		if(lower_cell == null) lower_cell = (TempCell)sim.getCell(x, 0);
+		
 		double left_cell_temp = left_cell == null ? 0 : left_cell.getTemp();
 		double right_cell_temp = right_cell == null ? 0 : right_cell.getTemp();
 		double upper_cell_temp = upper_cell == null ? 0 : upper_cell.getTemp();
@@ -58,7 +63,7 @@ public class TempCell extends SimCell {
 		//System.out.println(temp);
 		//System.out.println(color);
 		
-		g.setColor(new Color(255, color, 0));
+		g.setColor(new Color(color, color, color));
 		
 		int x_draw = Display.DISPLAY_WIDTH * x / Simulation.CELL_RES_X;
 		int y_draw = Display.DISPLAY_HEIGHT * y / Simulation.CELL_RES_Y;
@@ -69,6 +74,5 @@ public class TempCell extends SimCell {
 	}
 	
 	public double getTemp() {return this.temp;}
-
-	
+	public void setTemp(double temp) {this.temp = temp;}
 }

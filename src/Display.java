@@ -100,9 +100,9 @@ public class Display extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent m) {
-				double temp = ((TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
-						 m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT)).getTemp();
-				System.out.println(temp);
+//				double temp = ((TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
+//						 m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT)).getTemp();
+//				System.out.println(temp);
 			}
 
 			@Override
@@ -118,6 +118,11 @@ public class Display extends JFrame {
 					mouse_click_x = m.getX();
 					mouse_click_y = m.getY();
 				}
+				else if(m.getButton() == MouseEvent.BUTTON1) {
+					TempCell cell = (TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
+														  m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT);
+					cell.setTemp(1000 + cell.getTemp());
+				}
 			}
 
 			@Override
@@ -131,16 +136,23 @@ public class Display extends JFrame {
 			@Override
 			public void mouseDragged(MouseEvent m) {
 
-				if(SwingUtilities.isLeftMouseButton(m) && m.isControlDown()) {
-					int delta_x = m.getX() - mouse_click_x;
-					int delta_y = m.getY() - mouse_click_y;
-					
-					if(delta_x != 0 || delta_y != 0) {
+				if(SwingUtilities.isLeftMouseButton(m)) {
+					if(m.isControlDown()) {
+						int delta_x = m.getX() - mouse_click_x;
+						int delta_y = m.getY() - mouse_click_y;
 						
-						int new_x = myThis.getLocation().x + delta_x;
-						int new_y = myThis.getLocation().y + delta_y;
+						if(delta_x != 0 || delta_y != 0) {
 							
-						myThis.setLocation(new_x, new_y);
+							int new_x = myThis.getLocation().x + delta_x;
+							int new_y = myThis.getLocation().y + delta_y;
+								
+							myThis.setLocation(new_x, new_y);
+						}
+					}
+					else {
+						TempCell cell = (TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
+															  m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT);
+						cell.setTemp(1000 + cell.getTemp());
 					}
 				}
 			}
