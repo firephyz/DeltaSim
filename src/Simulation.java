@@ -11,9 +11,9 @@ public class Simulation {
 	public static int CELL_RES_X = 250;
 	public static int CELL_RES_Y = 250;
 	
-	public static double DELTA_T = 0.001;
-	public static double DELTA_X = 0.1;
-	public static double DELTA_Y = 0.1;
+	public static double DELTA_T = 0.01;
+	public static double DELTA_X = 1;
+	public static double DELTA_Y = 1;
 
 	public Simulation() {
 		

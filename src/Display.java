@@ -30,7 +30,7 @@ public class Display extends JFrame {
 	
 	public static int DISPLAY_WIDTH = 500;
 	public static int DISPLAY_HEIGHT = 500;
-	public static int FRAMERATE = 60;
+	public static int FRAMERATE = 30;
 	
 	private int mouse_click_x;
 	private int mouse_click_y;
@@ -72,7 +72,7 @@ public class Display extends JFrame {
 				
 				updateBuffer(buffer.getGraphics());
 				
-				canvas.repaint();
+				canvas.paintComponent(canvas.getGraphics());
 			}
 			
 		}, 0, 1000 / FRAMERATE);
