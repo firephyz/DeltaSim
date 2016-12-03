@@ -86,6 +86,9 @@ public class Display extends JFrame {
 				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					System.exit(0);
 				}
+				else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+					sim.toggleShouldSim();
+				}
 			}
 
 			@Override
@@ -119,9 +122,20 @@ public class Display extends JFrame {
 					mouse_click_y = m.getY();
 				}
 				else if(m.getButton() == MouseEvent.BUTTON1) {
-					TempCell cell = (TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
-														  m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT);
-					cell.setTemp(1000 + cell.getTemp());
+//					TempCell cell = (TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
+//														  m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT);
+					TempCell.addDrop(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
+									 m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT,
+									 1);
+				}
+				else if(m.getButton() == MouseEvent.BUTTON3) {
+					double temp = TempCell.getTempCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
+									 	 			   m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT).getTemp();
+					System.out.println(temp);
+					
+					TempCell.addDrop(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
+									 m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT,
+									 -1);
 				}
 			}
 
@@ -152,13 +166,15 @@ public class Display extends JFrame {
 					else {
 						TempCell cell = (TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
 															  m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT);
-						cell.setTemp(1000 + cell.getTemp());
+						//cell.setTemp(1000 + cell.getTemp());
 					}
 				}
 			}
 
 			@Override
-			public void mouseMoved(MouseEvent m) {}
+			public void mouseMoved(MouseEvent m) {
+				System.out.println(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH + ", " + m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT);
+			}
 			
 		});
 	}
