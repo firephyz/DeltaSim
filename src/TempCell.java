@@ -59,8 +59,8 @@ public class TempCell extends SimCell {
 		int red = 0;
 		int green = 0;
 		
-		if(temp < 0) red = (int)(255 * -temp / Math.abs(sim.min));
-		if(temp > 0) green = (int)(255 * temp / sim.max);
+		if(temp < 0) red = (int)(255 * -temp / 100);
+		if(temp > 0) green = (int)(255 * temp / 100);
 		
 		if(red > 255) red = 255;
 		if(green > 255) green = 255;
