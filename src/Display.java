@@ -102,11 +102,7 @@ public class Display extends JFrame {
 		this.addMouseListener(new MouseListener() {
 
 			@Override
-			public void mouseClicked(MouseEvent m) {
-//				double temp = ((TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
-//						 m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT)).getTemp();
-//				System.out.println(temp);
-			}
+			public void mouseClicked(MouseEvent m) {}
 
 			@Override
 			public void mouseEntered(MouseEvent m) {}
@@ -121,21 +117,13 @@ public class Display extends JFrame {
 					mouse_click_x = m.getX();
 					mouse_click_y = m.getY();
 				}
-				else if(m.getButton() == MouseEvent.BUTTON1) {
-//					TempCell cell = (TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
-//														  m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT);
-					TempCell.addDrop(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
-									 m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT,
-									 1);
+				else if (m.getButton() == MouseEvent.BUTTON1) {
+					TempCell.getTempCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH ,
+										 m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT).setTemp(100);
 				}
 				else if(m.getButton() == MouseEvent.BUTTON3) {
-					double temp = TempCell.getTempCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
-									 	 			   m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT).getTemp();
-					System.out.println(temp);
-					
-					TempCell.addDrop(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
-									 m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT,
-									 -1);
+					System.out.println(TempCell.getTempCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH ,
+										 					m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT).getTemp());
 				}
 			}
 
@@ -164,17 +152,14 @@ public class Display extends JFrame {
 						}
 					}
 					else {
-						TempCell cell = (TempCell)sim.getCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH,
-															  m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT);
-						//cell.setTemp(1000 + cell.getTemp());
+						TempCell.getTempCell(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH ,
+								 			 m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT).setTemp(100);
 					}
 				}
 			}
 
 			@Override
-			public void mouseMoved(MouseEvent m) {
-				System.out.println(m.getX() * Simulation.CELL_RES_X / Display.DISPLAY_WIDTH + ", " + m.getY() * Simulation.CELL_RES_Y / Display.DISPLAY_HEIGHT);
-			}
+			public void mouseMoved(MouseEvent m) {}
 			
 		});
 	}
